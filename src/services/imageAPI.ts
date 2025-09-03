@@ -1,5 +1,5 @@
 const FLUX_API_URL = 'https://api.replicate.com/v1/predictions';
-const FLUX_API_TOKEN = process.env.VITE_REPLICATE_API_TOKEN || '';
+const FLUX_API_TOKEN = import.meta.env.VITE_REPLICATE_API_TOKEN || '';
 
 export interface GenerateImageRequest {
   prompt: string;
