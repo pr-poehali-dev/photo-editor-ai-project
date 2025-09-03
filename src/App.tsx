@@ -5,11 +5,11 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/context/AuthContext";
-import Index from "./pages/Index";
-import Generate from "./pages/Generate";
+import Navigation from "@/components/Navigation";
+import Home from "./pages/Home";
 import Editor from "./pages/Editor";
-import Enhance from "./pages/Enhance";
-import Dashboard from "./pages/Dashboard";
+import Gallery from "./pages/Gallery";
+import About from "./pages/About";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -21,12 +21,12 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
+          <Navigation />
           <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/generate" element={<Generate />} />
+            <Route path="/" element={<Home />} />
             <Route path="/editor" element={<Editor />} />
-            <Route path="/enhance" element={<Enhance />} />
-            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/gallery" element={<Gallery />} />
+            <Route path="/about" element={<About />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
