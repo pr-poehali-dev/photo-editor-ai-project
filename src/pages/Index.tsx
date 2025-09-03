@@ -1,19 +1,23 @@
 import { useState, useRef, useCallback } from 'react';
+import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, CardTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Progress } from '@/components/ui/progress';
 import { Slider } from '@/components/ui/slider';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
+import Header from '@/components/layout/Header';
+import { useAuth } from '@/context/AuthContext';
 import Icon from '@/components/ui/icon';
 
 const Index = () => {
+  const { user, login, register, logout } = useAuth();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [prompt, setPrompt] = useState('');
   const [isGenerating, setIsGenerating] = useState(false);
@@ -103,29 +107,7 @@ const Index = () => {
         className="hidden"
       />
 
-      {/* Header */}
-      <header className="border-b bg-white/80 backdrop-blur-md sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-gradient-to-br from-primary to-purple-600 rounded-lg flex items-center justify-center">
-                <Icon name="Sparkles" size={18} className="text-white" />
-              </div>
-              <h1 className="text-xl font-bold text-gray-900">AI Photo Editor</h1>
-            </div>
-            <nav className="hidden md:flex items-center space-x-8">
-              <a href="#tools" className="text-gray-600 hover:text-primary transition-colors">Инструменты</a>
-              <a href="#gallery" className="text-gray-600 hover:text-primary transition-colors">Галерея</a>
-              <a href="#pricing" className="text-gray-600 hover:text-primary transition-colors">Тарифы</a>
-              <a href="#learn" className="text-gray-600 hover:text-primary transition-colors">Обучение</a>
-            </nav>
-            <div className="flex items-center space-x-3">
-              <Button variant="ghost" size="sm">Войти</Button>
-              <Button size="sm">Начать</Button>
-            </div>
-          </div>
-        </div>
-      </header>
+      <Header user={user} onLogin={login} onRegister={register} onLogout={logout} />
 
       {/* Hero Section with Upload */}
       <section className="py-20 px-4">
@@ -181,14 +163,18 @@ const Index = () => {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="px-8" onClick={() => fileInputRef.current?.click()}>
-                <Icon name="Upload" size={18} className="mr-2" />
-                Загрузить фото
-              </Button>
-              <Button variant="outline" size="lg" className="px-8">
-                <Icon name="Play" size={18} className="mr-2" />
-                Смотреть демо
-              </Button>
+              <Link to="/generate">
+                <Button size="lg" className="px-8">
+                  <Icon name="Sparkles" size={18} className="mr-2" />
+                  Генерировать ИИ
+                </Button>
+              </Link>
+              <Link to="/editor">
+                <Button variant="outline" size="lg" className="px-8">
+                  <Icon name="Upload" size={18} className="mr-2" />
+                  Редактировать фото
+                </Button>
+              </Link>
             </div>
           </div>
         </div>
